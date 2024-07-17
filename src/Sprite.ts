@@ -620,7 +620,7 @@ export class Sprite extends SpriteBase {
     yield* super.askAndWait(question);
   }
 
-  public createClone(): void {
+  public createClone(): typeof this {
     const clone = Object.assign(
       Object.create(Object.getPrototypeOf(this) as object) as this,
       this
@@ -665,6 +665,8 @@ export class Sprite extends SpriteBase {
     void this._project._startTriggers(
       triggers.map((trigger) => ({ trigger, target: clone }))
     );
+
+    return clone;
   }
 
   public deleteThisClone(): void {
