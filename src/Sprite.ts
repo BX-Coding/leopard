@@ -232,6 +232,14 @@ abstract class SpriteBase {
     return this.costumes;
   }
 
+  public addCostume(costume: Costume): void {
+    this.costumes.push(costume);
+  }
+
+  public setCostumes(costumes: Costume[]): void {
+    this.costumes = costumes;
+  }
+
   public deleteCostume(costume: number | Costume): void {
     costume instanceof Costume
       ? this.costumes.splice(this.costumes.indexOf(costume), 1)
