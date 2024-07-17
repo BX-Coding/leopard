@@ -250,6 +250,14 @@ abstract class SpriteBase {
     return this.sounds;
   }
 
+  public addSound(sound: Sound): void {
+    this.sounds.push(sound);
+  }
+
+  public setSounds(sounds: Sound[]): void {
+    this.sounds = sounds;
+  }
+
   public deleteSound(sound: number | Sound): void {
     sound instanceof Sound
       ? this.sounds.splice(this.sounds.indexOf(sound), 1)
