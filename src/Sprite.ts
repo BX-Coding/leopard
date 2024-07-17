@@ -94,6 +94,7 @@ export type SpeechBubble = {
 type InitialConditions = {
   costumeNumber: number;
   layerOrder?: number;
+  id: string;
 };
 
 abstract class SpriteBase {
@@ -111,6 +112,8 @@ abstract class SpriteBase {
   public audioEffects: AudioEffectMap;
 
   protected _vars: object;
+
+  public id: string;
 
   public constructor(initialConditions: InitialConditions, vars = {}) {
     // TODO: pass project in here, ideally
@@ -132,6 +135,8 @@ abstract class SpriteBase {
     this.audioEffects = new AudioEffectMap(this.effectChain);
 
     this._vars = vars;
+
+    this.id = initialConditions.id;
   }
 
   protected getSoundsPlayedByMe(): Sound[] {
@@ -221,6 +226,26 @@ abstract class SpriteBase {
 
   public get costume(): Costume {
     return this.costumes[this.costumeNumber - 1];
+  }
+
+  public getCostumes(): Costume[] {
+    return this.costumes;
+  }
+
+  public deleteCostume(costume: number | Costume): void {
+    costume instanceof Costume
+      ? this.costumes.splice(this.costumes.indexOf(costume), 1)
+      : this.costumes.splice(costume, 1);
+  }
+
+  public getSounds(): Sound[] {
+    return this.sounds;
+  }
+
+  public deleteSound(sound: number | Sound): void {
+    sound instanceof Sound
+      ? this.sounds.splice(this.sounds.indexOf(sound), 1)
+      : this.sounds.splice(sound, 1);
   }
 
   public degToRad(deg: number): number {
@@ -565,6 +590,10 @@ export class Sprite extends SpriteBase {
       style: "say",
       timeout: null,
     };
+  }
+
+  public get isOriginal(): boolean {
+    return this.parent == null;
   }
 
   public *askAndWait(question: string): Yielding<void> {
