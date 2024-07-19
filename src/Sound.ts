@@ -4,6 +4,7 @@ import type { Yielding } from "./lib/yielding";
 export default class Sound {
   public name: string;
   public url: string;
+  public id: string;
 
   private audioBuffer: AudioBuffer | null;
   private source: AudioBufferSourceNode | null;
@@ -14,9 +15,10 @@ export default class Sound {
   private _doneDownloading: ((fromMoreRecentCall: boolean) => void) | undefined;
 
   private static _audioContext: AudioContext | undefined;
-  public constructor(name: string, url: string) {
+  public constructor(name: string, url: string, id: string) {
     this.name = name;
     this.url = url;
+    this.id = id;
 
     this.audioBuffer = null;
     this.source = null;
