@@ -244,6 +244,10 @@ abstract class SpriteBase {
     costume instanceof Costume
       ? this.costumes.splice(this.costumes.indexOf(costume), 1)
       : this.costumes.splice(costume, 1);
+
+    if (this.costumeNumber > this.costumes.length) {
+      this.costumeNumber = this.costumes.length;
+    }
   }
 
   public getSounds(): Sound[] {
@@ -1000,7 +1004,7 @@ export class Sprite extends SpriteBase {
     BOTTOM: Symbol("BOTTOM"),
     LEFT: Symbol("LEFT"),
     RIGHT: Symbol("RIGHT"),
-    TOP: Symbol("TOP")
+    TOP: Symbol("TOP"),
   });
 }
 
@@ -1018,7 +1022,7 @@ export class Stage extends SpriteBase {
     right: number;
     top: number;
     bottom: number;
-  }
+  };
 
   public constructor(initialConditions: StageInitialConditions, vars = {}) {
     super(initialConditions, vars);
@@ -1040,7 +1044,7 @@ export class Stage extends SpriteBase {
       left: -this.width / 2,
       right: this.width / 2,
       top: this.height / 2,
-      bottom: -this.height / 2
+      bottom: -this.height / 2,
     };
 
     // For obsolete counter blocks.
