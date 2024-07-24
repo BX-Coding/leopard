@@ -6,6 +6,7 @@ import type { Mouse } from "./Input";
 import type Project from "./Project";
 import type Watcher from "./Watcher";
 import type { Yielding } from "./lib/yielding";
+import EventEmitter from "events";
 
 import { effectNames } from "./renderer/effectInfo";
 
@@ -97,7 +98,7 @@ type InitialConditions = {
   id: string;
 };
 
-abstract class SpriteBase {
+abstract class SpriteBase extends EventEmitter {
   protected _project!: Project;
 
   protected _costumeNumber: number;
@@ -116,6 +117,8 @@ abstract class SpriteBase {
   public id: string;
 
   public constructor(initialConditions: InitialConditions, vars = {}) {
+    super();
+
     // TODO: pass project in here, ideally
     const { costumeNumber, layerOrder = 0 } = initialConditions;
     this._costumeNumber = costumeNumber;
@@ -556,6 +559,7 @@ type SpriteInitialConditions = {
   penDown?: boolean;
   penSize?: number;
   penColor?: Color;
+  id: string;
 };
 
 export class Sprite extends SpriteBase {
@@ -709,6 +713,8 @@ export class Sprite extends SpriteBase {
 
     this._x = x;
     this._y = y;
+
+    this.emit("MOVE", this);
   }
 
   public get x(): number {
